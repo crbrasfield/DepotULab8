@@ -1,31 +1,50 @@
 $(document).ready(function () {
-    console.log("ready!");
-
-    $('#dice-button').click(function (){
-        console.log('click detected');
-        addBox();
+    $('#dice-button').click(function () {
+        addDice();
+        console.log(loadedDie);
     });
-
+    $('#roll-button').click(function () {
+        rollDice();
+    });
 });
 
 
-function addBox(){
-    var box = document.createElement('div');
-    var pElement = document.createElement('p');
-    var randomNum = String(Math.floor((Math.random() * 6) + 1));
-    box.className = 'box';
-    document.body.appendChild(box);
-    box.appendChild(pElement);
-    pElement.innerHTML = randomNum;
-    console.log('box added');
+var loadedDie = [];
+
+var Die = function (value, elementID) {
+    this.value = value;
+    this.elementID = elementID;
+
+    this.newDie = function () {
+        var box = document.createElement('div');
+        var pElement = document.createElement('p');
+        document.body.appendChild(box);
+        box.appendChild(pElement);
+        box.id = this.elementID;
+        pElement.innerText = this.value;
+    };
+
+
+    this.rollAll = function () {
+        this.value = getRandomNum();
+    };
+
 };
 
+function addDice() {
+    var dice = new Die(getRandomNum(), loadedDie.length);
+    dice.newDie();
+    loadedDie.push(dice);
+};
 
-var Die = function(value) {
-    this.value = getNumber;
-    function getNumber(){
-        String(Math.floor((Math.random() * 6) + 1));
-        
+function getRandomNum() {
+    var number = (Math.floor((Math.random() * 6) + 1));
+    return number;
+};
+
+function rollDice() {
+    for (var i = 0; i < loadedDie.length; i++) {
+        loadedDie[i].rollAll();
+        console.log('rolling all');
     }
-    
 }

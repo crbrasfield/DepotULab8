@@ -20,7 +20,7 @@ var Die = function (value, elementID) {
         var pElement = document.createElement('p');
         document.body.appendChild(box);
         box.appendChild(pElement);
-        box.id = this.elementID;
+        pElement.id = this.elementID;
         pElement.innerText = this.value;
     };
 
@@ -38,7 +38,7 @@ function addDice() {
 };
 
 function getRandomNum() {
-    var number = (Math.floor((Math.random() * 6) + 1));
+    var number = Math.floor((Math.random() * 6) + 1);
     return number;
 };
 

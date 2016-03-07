@@ -1,50 +1,56 @@
 $(document).ready(function () {
     $('#dice-button').click(function () {
         addDice();
-        console.log(loadedDie);
     });
     $('#roll-button').click(function () {
         rollDice();
+    });
+     $('#sum-button').click(function () {
+        sumDice();
     });
 });
 
 
 var loadedDie = [];
 
-var Die = function (value, elementID) {
-    this.value = value;
-    this.elementID = elementID;
+var Die = function () {
+    this.value = null;
+    this.div = null;
 
     this.newDie = function () {
-        var box = document.createElement('div');
-        var pElement = document.createElement('p');
-        document.body.appendChild(box);
-        box.appendChild(pElement);
-        pElement.id = this.elementID;
-        pElement.innerText = this.value;
+        this.div = document.createElement('div');
+        this.div.className = 'die';
+        this.roll();
+        document.body.appendChild(this.div);
     };
 
-
-    this.rollAll = function () {
-        this.value = getRandomNum();
+    this.roll = function () {
+        var num = Math.floor(Math.random() * 6) + 1;
+        this.value = num;
+        this.div.innerHTML = num;
     };
 
 };
 
 function addDice() {
-    var dice = new Die(getRandomNum(), loadedDie.length);
+    var dice = new Die();
     dice.newDie();
     loadedDie.push(dice);
 };
 
-function getRandomNum() {
-    var number = Math.floor((Math.random() * 6) + 1);
-    return number;
-};
 
 function rollDice() {
     for (var i = 0; i < loadedDie.length; i++) {
-        loadedDie[i].rollAll();
-        console.log('rolling all');
+        loadedDie[i].roll();
     }
+}
+
+function sumDice() {
+    var total = 0;
+    for (var i = 0; i < loadedDie.length; i++) {
+     total += loadedDie[i].value;
+    }
+    
+    alert('The sum of the dice is ' + total);
+    
 }
